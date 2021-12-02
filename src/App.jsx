@@ -3,14 +3,14 @@ import { Route } from "wouter";
 import Dashboard from "./pages/dashboard";
 import Orders from "./pages/orders";
 import Dishes from "./pages/dishes";
-
 import Layout from "./components/ui/Layout";
 function App() {
+  // console.log(import.meta.env);
   return (
     <div className="flex bg-gray-100">
       <Layout />
 
-      <main className="m-6">
+      <main className="m-6 w-full">
         <Route path="/" component={Dashboard} />
         <Route path="/orders" component={Orders} />
         <Route path="/dishes" component={Dishes} />
