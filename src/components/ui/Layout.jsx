@@ -3,7 +3,7 @@ import Navbar from "./Navbar";
 
 export default function Layout() {
   return (
-    <div className="flex flex-col w-64 h-screen px-4 py-8 bg-gray-200 border-r dark:bg-gray-800 dark:border-gray-600">
+    <div className="flex flex-col w-64 min-h-screen px-4 py-8 bg-gray-200 border-r dark:bg-gray-800 dark:border-gray-600">
       <h2 className="text-3xl font-semibold text-gray-800 dark:text-white">
         Restaurant
       </h2>
