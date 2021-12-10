@@ -1,30 +1,48 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
+import { FirebaseContext } from "../../firebase";
+import validationSchema from '../../utils/forms/FormNewDish'
+import { useLocation } from "wouter";
 
-const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, "the name is very short")
-    .required("The name is requited"),
-  price: Yup.number("Type only numbers")
-    .min(1, "The price must be at least 1")
-    .required("The prince is requited"),
-  category: Yup.string().required("The category is requited"),
-  // image: Yup.string().required("One image is requited"),
-  description: Yup.string().required("The category is requited"),
-});
 export default function index() {
+  const { firebase } = useContext(FirebaseContext);
+  const [pathName, setPathName] = useState("");
+  const [imageFile, setImageFile] = useState("");
+  const [buttonState, setButtonState] = useState(true)
+  const [location, setLocation] = useLocation();
+
+  const handleChangeImage = async (e) => {
+    if (e.target.files[0]) {
+      let image = e.target.files[0];
+      image.fullname = `${Date.now()}-${image.name}`;
+      setImageFile(image);
+      setPathName(image.fullname);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       name: "",
-      price: 0,
-      category: "1",
-      image: "",
+      price: 1,
+      category: "fast_food",
       description: "",
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      setButtonState(false)
+      try {
+        const response = await firebase.uploadImageFirebase(
+          `dishes/${pathName}`,
+          imageFile
+        );
+        const image = response;
+        const data = { ...values, image };
+        await firebase.setDocument("dishes", data);
+        setButtonState(true)
+        setLocation("/")
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
   return (
@@ -82,8 +100,8 @@ export default function index() {
             value={formik.values.category}
             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
           >
-            <option value="0">Fast Food</option>
-            <option value="1">Vegand Food</option>
+            <option value="fast_food">Fast Food</option>
+            <option value="vegan_food">vegan Food</option>
           </select>
         </div>
 
@@ -113,12 +131,11 @@ export default function index() {
                 </p>
               </div>
               <input
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.image}
-                name="image"
-                id="image"
                 type="file"
+                accept="image/*"
+                name="image"
+                onChange={handleChangeImage}
+                id="image"
                 className="hidden"
               />
             </label>
@@ -147,7 +164,8 @@ export default function index() {
         <div className="flex justify-end">
           <button
             type="submit"
-            className="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-80"
+            disabled={!buttonState}          
+            className={`${buttonState ?'bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-80':'bg-gray-400 cursor-not-allowed'} px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform  rounded-md `}
           >
             Save
           </button>
