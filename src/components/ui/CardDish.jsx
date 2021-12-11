@@ -12,7 +12,7 @@ export default function CardDish({ data }) {
       <div className="flex flex-col justify-between">
         <div>
           <div className="w-full h-10 flex items-center border-b-2 border-gray-200 pb-5 mb-2">
-            <div className="w-1/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
+            <div className="w-2/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
               <i className="bx bxs-user text-white"></i>
               <h2 className="text-white font-bold text-center p-2">Name</h2>
             </div>
@@ -22,7 +22,7 @@ export default function CardDish({ data }) {
           </div>
 
           <div className="w-full h-10 flex items-center border-b-2 border-gray-200 py-5 mb-2">
-            <div className="w-1/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
+            <div className="w-2/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
               <i className="bx bxs-envelope text-white"></i>
               <h2 className="text-white font-bold text-center p-2">Category</h2>
             </div>
@@ -32,7 +32,7 @@ export default function CardDish({ data }) {
           </div>
 
           <div className="w-full h-10 flex items-center border-b-2 border-gray-200 py-5 mb-2">
-            <div className="w-1/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
+            <div className="w-2/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
               <i className="bx bxs-phone text-white"></i>
               <h2 className="text-white font-bold text-center p-2">Price</h2>
             </div>
@@ -42,7 +42,7 @@ export default function CardDish({ data }) {
           </div>
 
           <div className="w-full flex items-center border-b-2 border-gray-200 py-5 mb-2">
-            <div className="w-1/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
+            <div className="w-2/4 bg-blue-500 h-10  rounded-r-xl flex items-center justify-center">
               <i className="bx bxs-phone text-white"></i>
               <h2 className="text-white font-bold text-center p-2">
                 Description
